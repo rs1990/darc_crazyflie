@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<launch>
+  
+    <node pkg="ros_vrpn_client" name="quad" type="ros_vrpn_client" args="_vrpn_server_ip:=155.98.9.183" required="true" />
+    <node pkg="joy" type="joy_node" name="Xbox_Controller" args="/dev/input/js0" respawn="true"/>
+
+    <node pkg = "darc_mocap"         type="mocap"         name="Mocap"         respawn="true" />
+    <node pkg = "darc_manual_fly" type="darc_manual_fly_node" name="Control" respawn="true"/>
+
+    <arg name="pd" default="0.0"/>
+    <param name="pd_ratio" value="$(arg pd)"/>
+
+    <arg name="pi" default="0.0"/>
+    <param name="pi_ratio" value="$(arg pi)"/>
+
+    <arg name="kx" default="0.0"/>
+    <param name="x_gain" value="$(arg kx)"/>
+
+    <arg name="ky" default="0.0"/>
+    <param name="y_gain" value="$(arg ky)"/>
+
+    <arg name="kz" default="3.0"/>
+    <param name="z_gain" value="$(arg kz)"/>
+
+    <arg name="kyaw" default="0.00"/>
+    <param name="yaw_gain" value="$(arg kyaw)"/>
+
+    <node pkg = "darc_position_hold" type="position_hold" name="Pos_Hold"      respawn = "true"/> 
+    <!--output="screen"/>-->
+  
+    <node pkg = "darc_crazyflie" type="darc_crazyflie_node" name="darc_crazyflie" resawn = "true" />
+  <arg name="crazyflieSDK" default="~/crazyflie/crazyflie-clients-python/lib" />
+  <arg name="uri" default="radio://0/80/2M" />
+  <arg name="joy_dev" default="/dev/input/js0" />
+
+  <include file="$(find crazyflie)/launch/crazyflie_server.launch">
+    <arg name="crazyflieSDK" value="$(arg crazyflieSDK)" />
+  </include>
+
+    <!--<param name="crazyflie/pid_rate/yaw_kp" value="200"/>-->
+    <include file="$(find crazyflie)/launch/crazyflie_add.launch">
+      <arg name="uri" value="$(arg uri)" />
+      <!--<arg name="tf_prefix" value="crazyflie1" />-->
+    </include>
+   
+    <node name ="darc_manual_fly" pkg = "darc_manual_fly" type="darc_manual_fly_node" >
+    </node>
+    
+
+    
+    
+    
+</launch>
+    
