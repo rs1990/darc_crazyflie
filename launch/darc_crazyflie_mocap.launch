@@ -10,30 +10,30 @@
     <node pkg = "darc_mocap"         type="mocap"         name="Mocap"         respawn="true" />
     <node pkg = "darc_manual_fly" type="darc_manual_fly_node" name="Control" respawn="true"/>
 
-    <arg name="pd" default="0.0"/>
+    <arg name="pd" default="0.25"/>
     <param name="pd_ratio" value="$(arg pd)"/>
 
-    <arg name="pi" default="0.0"/>
+    <arg name="pi" default="0.005"/>
     <param name="pi_ratio" value="$(arg pi)"/>
     
     <!-- This is the error about the roll along the y axis-->
     <!-- 20.0 was last tested -->
-    <arg name="kx" default="0.0"/>
+    <arg name="kx" default="1.5"/>
     <param name="x_gain" value="$(arg kx)"/>
     
     <!-- This is the error about the pitch along the x axis-->
     <!-- 20.0 was last tested -->
-    <arg name="ky" default="0.0"/>
+    <arg name="ky" default="1.0"/>
     <param name="y_gain" value="$(arg ky)"/>
 
     <!-- This is the thrust error in Z--> 
     <!-- 15 was working okay -->
     
-    <arg name="kz" default="0.0"/>
+    <arg name="kz" default="4.0"/>
     <param name="z_gain" value="$(arg kz)"/>
 
     <!-- This is just pure yaw error (make sure to zero in mocap software)-->
-    <arg name="kyaw" default="1.0"/>
+    <arg name="kyaw" default="5.0"/>
     <param name="yaw_gain" value="$(arg kyaw)"/>
 
     <node pkg = "darc_position_hold" type="position_hold" name="Pos_Hold"      respawn = "true"
@@ -58,10 +58,9 @@
    
     <!--<node name ="darc_manual_fly" pkg = "darc_manual_fly" type="darc_manual_fly_node" >
     </node> -->
-    <!--
-    <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot2" args="/battery"/>
-    -->
     
+    <node pkg="rqt_plot" type="rqt_plot" name="rqt_plot2" args="/battery"/>
+        
     
 
     

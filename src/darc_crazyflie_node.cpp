@@ -31,6 +31,7 @@ geometry_msgs::Twist vel_out;
 double x_max = 30.0,
 		y_max = -30.0,
 		z_max = 60000.0,
+		//z_max = 50000.0,
 		yaw_max = -200.0;
 
 double right_button;
@@ -48,7 +49,9 @@ void twist_callback(const geometry_msgs::Twist& twist_msg_in){
 	    vel_out.linear.y = twist_msg_in.angular.x * y_max;
 	    vel_out.angular.z = twist_msg_in.angular.z * y_max;
 	if (right_button){
-	    vel_out.linear.z = 15000.0 + (z_max + twist_msg_in.linear.z * z_max)/2.0;
+	//if(0) { //temp for control of thrust
+	    //vel_out.linear.z = 15000.0 + (z_max + twist_msg_in.linear.z * z_max)/2.0;
+	    vel_out.linear.z = 12000.0 + ((1+twist_msg_in.linear.z) * 48000.0);
 	    if (vel_out.linear.z > z_max){
 	        vel_out.linear.z = z_max;
 	        }
@@ -57,6 +60,7 @@ void twist_callback(const geometry_msgs::Twist& twist_msg_in){
 	    vel_out.linear.z = twist_msg_in.linear.z * z_max;
 
 	}
+	
 	
 	vel_out.angular.z = twist_msg_in.angular.z * yaw_max;
 }
