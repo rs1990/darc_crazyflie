@@ -11,7 +11,20 @@
 #include <geometry_msgs/Vector3.h>
 #include <geometry_msgs/Twist.h>
 #include <sensor_msgs/Joy.h>
+/* For the crazyflie twist message (cmd_vel):
+linear.x - pitch
+linear.y - roll
+linear.z - thrust
+angular.z - yaw
 
+for new_u in
+angular.x - roll about robot x
+angular.y - pitch about robot y
+angular.z - yaw rate about z
+linear.z - thrust
+
+
+*/
 
 geometry_msgs::Twist vel_out;
 //These values come from the crazyfie_ros demo. I need to spend some time looking further into their values. 
@@ -30,10 +43,15 @@ void joy_callback(const sensor_msgs::Joy& joy_msg_in)
 		
 void twist_callback(const geometry_msgs::Twist& twist_msg_in){
 //this will conver the input to the proper cotnrols for the crazyflie
-	    vel_out.linear.x = twist_msg_in.angular.y * y_max;
-	    vel_out.linear.y = twist_msg_in.angular.x * x_max;
+
+	    vel_out.linear.x = twist_msg_in.angular.y * x_max;
+	    vel_out.linear.y = twist_msg_in.angular.x * y_max;
+	    vel_out.angular.z = twist_msg_in.angular.z * y_max;
 	if (right_button){
-	    vel_out.linear.z = (z_max + twist_msg_in.linear.z * z_max)/2.0;
+	    vel_out.linear.z = 15000.0 + (z_max + twist_msg_in.linear.z * z_max)/2.0;
+	    if (vel_out.linear.z > z_max){
+	        vel_out.linear.z = z_max;
+	        }
 	}
 	else{
 	    vel_out.linear.z = twist_msg_in.linear.z * z_max;
