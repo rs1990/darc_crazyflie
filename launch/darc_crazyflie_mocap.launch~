@@ -36,7 +36,7 @@
     <arg name="kyaw" default="1.0"/>
     <param name="yaw_gain" value="$(arg kyaw)"/>
 
-    <node pkg = "darc_position_hold" type="position_hold" name="Pos_Hold"      respawn = "true"
+    <node pkg = "darc_crazy_pos_hold" type="crazy_pos_hold" name="Pos_Hold"      respawn = "true"
     output="screen"/>-->
     
     
