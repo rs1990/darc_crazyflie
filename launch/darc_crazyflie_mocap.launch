@@ -9,33 +9,44 @@
 
     <node pkg = "darc_mocap"         type="mocap"         name="Mocap"         respawn="true" />
     <node pkg = "darc_manual_fly" type="darc_manual_fly_node" name="Control" respawn="true"/>
-
-    <arg name="pd" default="0.25"/>
-    <param name="pd_ratio" value="$(arg pd)"/>
-
-    <arg name="pi" default="0.005"/>
-    <param name="pi_ratio" value="$(arg pi)"/>
+  
+    <!-- Daman Changes -->
+    <arg name="rP" default="1.5"/>
+    <param name="rollP" value="$(arg rP)"/>
     
-    <!-- This is the error about the roll along the y axis-->
-    <!-- 20.0 was last tested -->
-    <arg name="kx" default="1.5"/>
-    <param name="x_gain" value="$(arg kx)"/>
+    <arg name="rI" default="0.0075"/>
+    <param name="rollI" value="$(arg rI)"/>
     
-    <!-- This is the error about the pitch along the x axis-->
-    <!-- 20.0 was last tested -->
-    <arg name="ky" default="1.0"/>
-    <param name="y_gain" value="$(arg ky)"/>
-
-    <!-- This is the thrust error in Z--> 
-    <!-- 15 was working okay -->
+    <arg name="rD" default="0.375"/>
+    <param name="rollD" value="$(arg rD)"/>
     
-    <arg name="kz" default="4.0"/>
-    <param name="z_gain" value="$(arg kz)"/>
-
-    <!-- This is just pure yaw error (make sure to zero in mocap software)-->
-    <arg name="kyaw" default="5.0"/>
-    <param name="yaw_gain" value="$(arg kyaw)"/>
-
+    <arg name="pP" default="1.0"/>
+    <param name="pitchP" value="$(arg pP)"/>
+    
+    <arg name="pI" default="0.005"/>
+    <param name="pitchI" value="$(arg pI)"/>
+    
+    <arg name="pD" default="0.25"/>
+    <param name="pitchD" value="$(arg pD)"/>
+    
+    <arg name="tP" default="4.0"/>
+    <param name="thrustP" value="$(arg tP)"/>
+    
+    <arg name="tI" default="0.3"/>
+    <param name="thrustI" value="$(arg tI)"/>
+    
+    <arg name="tD" default="10.0"/>
+    <param name="thrustD" value="$(arg tD)"/>
+    
+    <arg name="yP" default="5.0"/>
+    <param name="yawP" value="$(arg yP)"/>
+    
+    <arg name="yI" default="0.0"/>
+    <param name="yawI" value="$(arg yI)"/>
+    
+    <arg name="yD" default="0.0"/>
+    <param name="yawD" value="$(arg yD)"/>
+    
     <node pkg = "darc_position_hold" type="position_hold" name="Pos_Hold"      respawn = "true"
     output="screen"/>-->
     
