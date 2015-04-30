@@ -51,7 +51,8 @@ void twist_callback(const geometry_msgs::Twist& twist_msg_in){
 	if (right_button){
 	//if(0) { //temp for control of thrust
 	    //vel_out.linear.z = 15000.0 + (z_max + twist_msg_in.linear.z * z_max)/2.0;
-	    vel_out.linear.z = 12000.0 + ((1+twist_msg_in.linear.z) * 48000.0);
+	    //vel_out.linear.z = 12000 + ((1+twist_msg_in.linear.z) * 48000.0);
+	    vel_out.linear.z = ((1.0+twist_msg_in.linear.z) * 30000.0);
 	    if (vel_out.linear.z > z_max){
 	        vel_out.linear.z = z_max;
 	        }
