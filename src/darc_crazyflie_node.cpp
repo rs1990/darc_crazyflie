@@ -78,7 +78,7 @@ int main(int argc, char **argv){
     joy_sub = node.subscribe("joy",1,joy_callback);
 	
 	ros::Publisher twist_out;
-	twist_out = node.advertise<geometry_msgs::Twist>("cmd_vel",1);
+	twist_out = node.advertise<geometry_msgs::Twist>("/cmd_vel",1);
 	
 	while(ros::ok()){
 		ros::spinOnce();
