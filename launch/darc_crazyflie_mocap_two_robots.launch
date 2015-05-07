@@ -39,11 +39,11 @@
         <arg name="crazyflieSDK" value="$(arg crazyflieSDK)" />
     </include>
     
-    <!--<node pkg="ros_vrpn_client" name="$(arg ROBOT_NAME1)" type="ros_vrpn_client" args="_vrpn_server_ip:=$(arg VRPN_IP)" required="true" />-->
-    <!--<node pkg="ros_vrpn_client" name="$(arg ROBOT_NAME2)" type="ros_vrpn_client" args="_vrpn_server_ip:=$(arg VRPN_IP)" required="true" /> -->
-    <node pkg="ros_vrpn_client" name="$(arg ROBOT_NAME3)" type="ros_vrpn_client" args="_vrpn_server_ip:=$(arg VRPN_IP)" required="true" />
+    <node pkg="ros_vrpn_client" name="$(arg ROBOT_NAME1)" type="ros_vrpn_client" args="_vrpn_server_ip:=$(arg VRPN_IP)" required="true" /> -->
+    <node pkg="ros_vrpn_client" name="$(arg ROBOT_NAME2)" type="ros_vrpn_client" args="_vrpn_server_ip:=$(arg VRPN_IP)" required="true" /> -->
+    <!-- <node pkg="ros_vrpn_client" name="$(arg ROBOT_NAME3)" type="ros_vrpn_client" args="_vrpn_server_ip:=$(arg VRPN_IP)" required="true" /> -->
     
-    <!--<group ns="$(arg ROBOT_NAME1)">
+    <group ns="$(arg ROBOT_NAME1)">
         <param name="thrustP" value="$(arg tP)"/>
         <param name="thrustI" value="$(arg tI)"/>
         <param name="thrustD" value="$(arg tD)"/>
@@ -69,7 +69,7 @@
         <node pkg = "darc_crazyflie" type="darc_crazyflie_node" name="darc_crazyflie" respawn = "true" />   
     </group>-->
     
-    <!--<group ns="$(arg ROBOT_NAME2)">
+    <group ns="$(arg ROBOT_NAME2)">
         <param name="thrustP" value="$(arg tP)"/>
         <param name="thrustI" value="$(arg tI)"/>
         <param name="thrustD" value="$(arg tD)"/>
@@ -95,7 +95,7 @@
         <node pkg = "darc_crazyflie" type="darc_crazyflie_node" name="darc_crazyflie" respawn = "true" />   
     </group>-->
        
-    <group ns="$(arg ROBOT_NAME3)">
+    <!--<group ns="$(arg ROBOT_NAME3)">
         <param name="thrustP" value="$(arg tP)"/>
         <param name="thrustI" value="$(arg tI)"/>
         <param name="thrustD" value="$(arg tD)"/>
