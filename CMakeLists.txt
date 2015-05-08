@@ -105,6 +105,7 @@ include_directories(
 
 ## Declare a cpp executable
 add_executable(darc_crazyflie_node src/darc_crazyflie_node.cpp)
+add_executable(darc_crazyflie_manual_node src/darc_crazyflie_manual_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -112,6 +113,9 @@ add_executable(darc_crazyflie_node src/darc_crazyflie_node.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(darc_crazyflie_node
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(darc_crazyflie_manual_node
   ${catkin_LIBRARIES}
 )
 
