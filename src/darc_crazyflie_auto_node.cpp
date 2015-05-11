@@ -10,6 +10,8 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Vector3.h>
 #include <geometry_msgs/Twist.h>
+#include <std_srvs/Empty.h>
+
 //#include <sensor_msgs/Joy.h>
 /* For the crazyflie twist message (cmd_vel):
 linear.x - pitch
@@ -32,7 +34,8 @@ double x_max = 30.0,
 		y_max = -30.0,
 		z_max = 60000.0,
 		yaw_max = -200.0;
-	
+		
+bool thrust = false;
 void twist_callback(const geometry_msgs::Twist& twist_msg_in){
 //this will conver the input to the proper cotnrols for the crazyflie
 
@@ -46,6 +49,15 @@ void twist_callback(const geometry_msgs::Twist& twist_msg_in){
 	    }
 }
 
+void thrustOn_callback(std_srvs::Empty::Request &req, std_srvs::Empty::Response & resp)
+{
+    thrust = true;
+}
+
+void thrustOff_callback(std_srvs::Empty &req)
+{
+    thrust = false;
+}
 int main(int argc, char **argv){
 	ros::init(argc, argv, "darc_crazyflie_node");
 	ros::NodeHandle node;
@@ -57,9 +69,12 @@ int main(int argc, char **argv){
 	ros::Publisher twist_out;
 	twist_out = node.advertise<geometry_msgs::Twist>("cmd_vel",1);
 	
+	ros::ServiceServer thrustOn_srv = n.advertiseService("thrustOn",thrustOn_callback);
+	ros::ServiceServer thrustOff_srv = node.advertiseService("thrustOff",thrustOff_callback);
+	
 	while(ros::ok()){
 		ros::spinOnce();
-
+        ROS_INFO("Thrust is %d", thrust);
 		twist_out.publish(vel_out);
 		
 		loop_rate.sleep();
