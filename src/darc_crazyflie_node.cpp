@@ -31,26 +31,34 @@ linear.z - thrust
 bool thrustFlag = false;
 bool killSwitch = false;
 
+int joy_back, joy_start;
+//back is arm, start is disarm
+
 geometry_msgs::Twist vel_out;
 //These values come from the crazyfie_ros demo. I need to spend some time looking further into their values. 
 double x_max = 30.0,
 		y_max = -30.0,
 		z_max = 60000.0,
 		yaw_max = -200.0;
-/*		
+		
 void joy_callback(const sensor_msgs::Joy& joy_msg_in)
 {
     //right_button = joy_msg_in.buttons[5];
     //joy_a = joy_msg_in.buttons[0];
     //joy_b = joy_msg_in.buttons[1];
     joy_back = joy_msg_in.buttons[6];
+    joy_start = joy_msg_in.buttons[7];
     if (joy_back)
+    {
+        killSwitch = false;
+    }
+    if (joy_start)
     {
         killSwitch = true;
     }
 
 }
-*/
+
 
 bool thrustOn_callback(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response)
 {
@@ -76,19 +84,26 @@ void twist_callback(const geometry_msgs::Twist& twist_msg_in)
     vel_out.linear.x  = twist_msg_in.angular.y * x_max;
     vel_out.linear.y  = twist_msg_in.angular.x * y_max;
     vel_out.angular.z = twist_msg_in.angular.z * y_max;
+    if (!killSwitch) //if killSwitch is false it flies
+    {
+        if (thrustFlag)
+        {
+            vel_out.linear.z = ((1.0+twist_msg_in.linear.z) * z_max/2.0);
+        }
+        else 
+        {
+            vel_out.linear.z = twist_msg_in.linear.z*z_max;
+        }
+        if (vel_out.linear.z > z_max)
+        {
+            vel_out.linear.z = z_max;
+        }
+    }
+    else // killswitch is true so we want zero thrust
+    {
+        vel_out.linear.z = 0.0;
+    }
     
-    if (thrustFlag)
-    {
-        vel_out.linear.z = ((1.0+twist_msg_in.linear.z) * z_max/2.0);
-    }
-    else
-    {
-        vel_out.linear.z = twist_msg_in.linear.z*z_max;
-    }
-    if (vel_out.linear.z > z_max)
-    {
-        vel_out.linear.z = z_max;
-    }
 }
 
 int main(int argc, char **argv)
@@ -100,8 +115,8 @@ int main(int argc, char **argv)
 	ros::Subscriber twist_sub;
 	twist_sub = node.subscribe("new_u",1,twist_callback);
     
-    //ros::Subscriber joy_sub;
-    //joy_sub = node.subscribe("joy",1,joy_callback);
+    ros::Subscriber joy_sub;
+    joy_sub = node.subscribe("joy",1,joy_callback);
 	
 	ros::Publisher twist_out;
 	twist_out = node.advertise<geometry_msgs::Twist>("cmd_vel",1);
