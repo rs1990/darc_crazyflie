@@ -6,11 +6,11 @@
   <node pkg = "darc_manual_fly" type="darc_manual_fly_node" name="Control" respawn="true">
   <remap from="/desired_u" to="/new_u"/>
   </node>
-  <node pkg = "darc_crazyflie" type="darc_crazyflie_node" name="darc_crazyflie" resawn = "true" />
+  <node pkg = "darc_crazyflie" type="darc_crazyflie_node" name="darc_crazyflie" respawn = "true" />
   
   <arg name="crazyflieSDK" default="~/crazyflie/crazyflie-clients-python/lib" />
-  <!--<arg name="uri" default="radio://0/80/2M" />-->
-  <arg name="uri" default="radio://0/42/2M" />
+  <arg name="uri" default="radio://0/80/2M" />-->
+  <!--<arg name="uri" default="radio://0/42/2M" />-->
   <arg name="joy_dev" default="/dev/input/js0" />
   
   <include file="$(find crazyflie)/launch/crazyflie_server.launch">
