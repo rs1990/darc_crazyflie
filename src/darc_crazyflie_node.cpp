@@ -111,10 +111,14 @@ int main(int argc, char **argv)
 	ros::init(argc, argv, "darc_crazyflie_node");
 	ros::NodeHandle node;
 	ros::Rate loop_rate(50);
+
+    //node.getParam("")
 	
 	ros::Subscriber twist_sub;
 	twist_sub = node.subscribe("new_u",1,twist_callback);
-    
+    //ros::Subscriber twist_sub;
+    //twist_sub = node.subscribe("newCMD",1,twist_callback);
+
     ros::Subscriber joy_sub;
     joy_sub = node.subscribe("joy",1,joy_callback);
 	
